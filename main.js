@@ -79,3 +79,34 @@ function computeValue(value, constants) {
 
   return computedValue
 }
+
+const renderSpreadSheet = () => {
+  const headerHTML = `<tr>
+      <th></th>
+      ${times(COLUMNS)
+        .map((i) => `<th>${getColumn(i)}</th>`)
+        .join('')}
+    </tr>`
+
+  $head.innerHTML = headerHTML
+
+  const bodyHTML = times(ROWS)
+    .map((row) => {
+      return `<tr>
+      <td>${row + 1}</td>
+      ${times(COLUMNS)
+        .map(
+          (column) => `
+      <td data-x="${column}" data-y="${row}">
+        <span>${STATE[column][row].computedValue}</span>
+        <input type="text" value="${STATE[column][row].value}" />
+      </td>
+      `
+        )
+        .join('')}
+    </tr>`
+    })
+    .join('')
+
+  $body.innerHTML = bodyHTML
+}
